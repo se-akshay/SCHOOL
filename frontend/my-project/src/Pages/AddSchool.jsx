@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ImageUpload from "./ImageUpload";
 
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BASE_URL;
 
 const AddSchool = () => {
   const [form, setForm] = useState({
