@@ -5,11 +5,19 @@ const BACKEND_URL = import.meta.env.VITE_BASE_URL;
 const ShowSchools = () => {
   const [schools, setSchools] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true);
     fetch(`${BACKEND_URL}/schools`)
       .then((res) => res.json())
-      .then((data) => setSchools(data))
-      .catch(() => setSchools([]));
+      .then((data) => {
+        setSchools(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setSchools([]);
+        setLoading(false);
+      });
   }, []);
 
   const filteredSchools = schools.filter(
@@ -19,6 +27,13 @@ const ShowSchools = () => {
       school.state.toLowerCase().includes(search.toLowerCase())
   );
 
+  if (loading) {
+    return (
+      <div className="bg-[#f8f9fb] min-h-screen py-10 px-4 flex flex-col items-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Loading...</h2>
+      </div>
+    );
+  }
   return (
     <div className="bg-[#f8f9fb] min-h-screen py-10 px-4 flex flex-col items-center">
       <div className="flex flex-col items-center mb-8">
