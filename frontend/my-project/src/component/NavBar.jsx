@@ -3,17 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   return (
-    <nav className="bg-gradient-to-r from-[#2980d9] to-[#4ba3f7] border-b border-black w-full">
+    <nav className="bg-gradient-to-r from-blue-500 to-blue-400 py-4 px-6 text-white">
       <div className="max-w-full mx-auto px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between h-auto sm:h-16 py-2 sm:py-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          {/* Logo */}
           <div
-            className="flex items-center mb-2 sm:mb-0 cursor-pointer"
+            className="flex items-center justify-center cursor-pointer sm:justify-start"
             onClick={() => navigate("/")}
           >
             <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none">
               <path
-                d="M12 3L2 8l10 5 10-5-10-5zm0 13c-4.418 0-8-1.79-8-4v2c0 2.21 3.582 4 8 4s8-1.79 8-4v-2c0 2.21-3.582 4-8 4z"
+                d="M12 3L2 8l10 5 10-5-10-5zm0 13c-4.418 0-8-1.79-8-4v2c0 2.21 3.582 4 8 4s8-1.79 8-4v-2c0 2.21 3.582 4-8 4z"
                 fill="#fff"
               />
             </svg>
@@ -22,23 +24,21 @@ const NavBar = () => {
               <span className="ml-1 text-2xl sm:text-3xl font-bold">+</span>
             </span>
           </div>
-          <div className="flex flex-col sm:flex-row items-center sm:space-x-8 w-full sm:w-auto">
+          {/* Buttons */}
+          <div className=" flex flex-col sm:flex-row sm:justify-end items-center gap-4 mt-2 sm:mt-0">
             <button
               onClick={() => navigate("/add-school")}
-              className="flex items-center text-white font-semibold text-base sm:text-lg mb-2 sm:mb-0"
+              className="flex items-center bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded transition duration-150"
             >
-              <span className="text-xl sm:text-2xl font-bold mr-2">+</span>
-              <span className="flex flex-col sm:flex-row sm:items-center">
-                <span>Add</span>
-                <span className="sm:ml-1">School</span>
-              </span>
+              <span className="text-xl font-bold mr-2">+</span>
+              <span>Add School</span>
             </button>
             <button
               onClick={() => navigate("/show-schools")}
-              className="flex items-center text-white font-semibold text-base sm:text-lg"
+              className="flex items-center bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded transition duration-150"
             >
               <svg
-                className="w-5 sm:w-6 h-5 sm:h-6 mr-2"
+                className="w-5 h-5 mr-2"
                 fill="none"
                 stroke="white"
                 strokeWidth="2"
@@ -50,11 +50,31 @@ const NavBar = () => {
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
-              <span className="flex flex-col sm:flex-row sm:items-center">
-                <span>View</span>
-                <span className="sm:ml-1">Schools</span>
-              </span>
+              <span>View Schools</span>
             </button>
+            {!token ? (
+              <>
+                <button
+                  onClick={() => navigate("/signin")}
+                  className="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded transition duration-150"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded transition duration-150"
+                >
+                  Sign Up
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => navigate("/signout")}
+                className="bg-blue-400 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded transition duration-150"
+              >
+                Sign Out
+              </button>
+            )}
           </div>
         </div>
       </div>
